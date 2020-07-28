@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestTicTacToe(t *testing.T) {
+func TestPlayer(t *testing.T) {
 
 	BeforeEach(func() {
 
@@ -16,23 +16,15 @@ func TestTicTacToe(t *testing.T) {
 
 	})
 
-	Describe("TicTacToe", func() {
+	Describe("Player", func() {
 
-		It("should return *TicTacToe", func() {
-			g := Create()
-			AssertEqual(reflect.TypeOf(g).String(), "*tictactoe.TicTacToe")
-		})
-
-		It("should return 10 moves", func() {
-			g := Create()
-			g.GenerateGame()
-			AssertEqual(len(g.GetMoves()), 10)
+		It("should return *Player", func() {
+			ttt := CreatePlayer()
+			AssertEqual(reflect.TypeOf(ttt).String(), "*tictactoe.Player")
 		})
 
 		It("should return string of moves", func() {
-			g := Create()
-			g.GenerateGame()
-			AssertEqual(len(g.GetMovesAsString()), 109)
+
 		})
 	})
 
