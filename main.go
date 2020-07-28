@@ -5,10 +5,11 @@ import (
 	"math/rand"
 )
 
-type Condition uint8
+type Status uint8
 
 const (
-	NotEnded Condition = iota
+	NotEnded Status = iota
+	Illegal
 	XWon
 	OWon
 	Tie
@@ -27,8 +28,13 @@ func CreatePlayer() *Player {
 
 // Given an array of nine bytes it will return an appropriate move.
 func (this *Player) Move(b []byte) []byte {
+	// If the given board is not valid return it.
+	if Condition(b) == Illegal {
+		return b
+	}
+
 	// If the game has ended return an empty array.
-	if this.condition(b) != NotEnded {
+	if Condition(b) != NotEnded {
 		return []byte("         ")
 	}
 
@@ -61,7 +67,38 @@ func (this *Player) Move(b []byte) []byte {
 	return board
 }
 
-func (this *Player) condition(board []byte) Condition {
+func illegal(b []byte) bool {
+	if len(b) != 9 {
+		return true
+	}
+	x := 0
+	o := 0
+	f := 0
+	for _, p := range b {
+		switch p {
+		case X:
+			x++
+		case O:
+			o++
+		case F:
+			f++
+		default:
+			return true
+		}
+	}
+	if f == 9 {
+		return false
+	}
+	if o > x || x > o+1 {
+		return true
+	}
+	return false
+}
+
+func Condition(board []byte) Status {
+	if illegal(board) {
+		return Illegal
+	}
 	var (
 		x = (board[0] == X && board[1] == X && board[2] == X) || // Check all rows.
 			(board[3] == X && board[4] == X && board[5] == X) ||
