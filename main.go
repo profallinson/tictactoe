@@ -28,13 +28,9 @@ func CreatePlayer() *Player {
 
 // Given an array of nine bytes it will return an appropriate move.
 func (this *Player) Move(b []byte) []byte {
-	// If the given board is not valid return it.
-	if Condition(b) == Illegal {
-		return b
-	}
 
 	// If the game has ended return an empty array.
-	if Condition(b) != NotEnded {
+	if Condition(b) == Illegal || Condition(b) != NotEnded {
 		return []byte("         ")
 	}
 
