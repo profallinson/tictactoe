@@ -30,7 +30,7 @@ func CreatePlayer() *Player {
 func (this *Player) Move(b []byte) []byte {
 
 	// If the game has ended return an empty array.
-	if Condition(b) == Illegal || Condition(b) != NotEnded {
+	if c := Condition(b); c == Illegal || c != NotEnded {
 		return []byte("         ")
 	}
 
