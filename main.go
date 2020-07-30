@@ -28,8 +28,8 @@ func CreatePlayer() *Player {
 }
 
 func (this *Player) Play(state []byte, move []byte) ([]byte, Status) {
-	if !compare(state, move) {
-		return state, Illegal
+	if !IsLegalMove(state, move) {
+		return []byte("         "), Illegal
 	}
 	next := this.Move(move)
 	return next, Condition(next)
@@ -86,16 +86,10 @@ func count(b []byte) (x int, o int, f int) {
 	return x, o, f
 }
 
-func compare(state []byte, move []byte) bool {
-
+func IsLegalMove(state []byte, move []byte) bool {
 	if bytes.Equal(state, move) {
 		return false
 	}
-
-	if Condition(state) == Illegal || Condition(move) == Illegal {
-		return false
-	}
-
 	for i := 0; i < 9; i++ {
 		if state[i] != move[i] && state[i] != F {
 			return false
@@ -104,7 +98,7 @@ func compare(state []byte, move []byte) bool {
 	return true
 }
 
-func illegal(b []byte) bool {
+func IsLegalBoard(b []byte) bool {
 	if len(b) != 9 {
 		return true
 	}
@@ -122,7 +116,7 @@ func illegal(b []byte) bool {
 }
 
 func Condition(board []byte) Status {
-	if illegal(board) {
+	if IsLegalBoard(board) {
 		return Illegal
 	}
 	var (
