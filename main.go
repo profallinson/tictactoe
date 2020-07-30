@@ -2,6 +2,7 @@ package tictactoe
 
 import (
 	// "fmt"
+	"bytes"
 	"math/rand"
 )
 
@@ -24,6 +25,14 @@ func CreatePlayer() *Player {
 	this := &Player{}
 	rand.Seed(42)
 	return this
+}
+
+func (this *Player) Play(state []byte, move []byte) ([]byte, Status) {
+	if !compare(state, move) {
+		return state, Illegal
+	}
+	next := this.Move(move)
+	return next, Condition(next)
 }
 
 // Given an array of nine bytes it will return an appropriate move.
@@ -63,13 +72,7 @@ func (this *Player) Move(b []byte) []byte {
 	return board
 }
 
-func illegal(b []byte) bool {
-	if len(b) != 9 {
-		return true
-	}
-	x := 0
-	o := 0
-	f := 0
+func count(b []byte) (x int, o int, f int) {
 	for _, p := range b {
 		switch p {
 		case X:
@@ -78,9 +81,36 @@ func illegal(b []byte) bool {
 			o++
 		case F:
 			f++
-		default:
-			return true
 		}
+	}
+	return x, o, f
+}
+
+func compare(state []byte, move []byte) bool {
+
+	if bytes.Equal(state, move) {
+		return false
+	}
+
+	if Condition(state) == Illegal || Condition(move) == Illegal {
+		return false
+	}
+
+	for i := 0; i < 9; i++ {
+		if state[i] != move[i] && state[i] != F {
+			return false
+		}
+	}
+	return true
+}
+
+func illegal(b []byte) bool {
+	if len(b) != 9 {
+		return true
+	}
+	x, o, f := count(b)
+	if x+o+f != 9 {
+		return true
 	}
 	if f == 9 {
 		return false

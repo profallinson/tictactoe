@@ -64,6 +64,54 @@ func TestPlayer(t *testing.T) {
 		It("should return 'Illegal' because of too much input", func() {
 			AssertEqual(Condition([]byte("          ")), Illegal)
 		})
+
+		It("should return 'Illegal' because no move was made", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("         "), []byte("         "))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because O played first", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("        O"), []byte("         "))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because the board was reset", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("        X"), []byte("         "))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because the board didn't change", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("        X"), []byte("        X"))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because a play was removed", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("    O   X"), []byte("        X"))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because two plays were removed", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte(" X  O   X"), []byte("        X"))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because the board was altered with no play", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("    O   X"), []byte("      O X"))
+			AssertEqual(v, Illegal)
+		})
+
+		It("should return 'Illegal' because the board was altered with play", func() {
+			ttt := CreatePlayer()
+			_, v := ttt.Play([]byte("    O   X"), []byte("   X  O X"))
+			AssertEqual(v, Illegal)
+		})
 	})
 
 	Report(t)
