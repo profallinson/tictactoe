@@ -87,6 +87,9 @@ func count(b []byte) (x int, o int, f int) {
 }
 
 func IsLegalMove(state []byte, move []byte) bool {
+	if len(state) != 9 || len(move) != 9 {
+		return false
+	}
 	if bytes.Equal(state, move) {
 		return false
 	}
