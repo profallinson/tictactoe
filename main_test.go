@@ -16,7 +16,7 @@ func TestPlayer(t *testing.T) {
 
 	})
 
-	Describe("Player", func() {
+	Describe("Player.Move()", func() {
 
 		It("should return *Player", func() {
 			ttt := CreatePlayer()
@@ -64,6 +64,10 @@ func TestPlayer(t *testing.T) {
 		It("should return 'Illegal' because of too much input", func() {
 			AssertEqual(Condition([]byte("          ")), Illegal)
 		})
+
+	})
+
+	Describe("Player.Play()", func() {
 
 		It("should return 'Illegal' because no move was made", func() {
 			ttt := CreatePlayer()
