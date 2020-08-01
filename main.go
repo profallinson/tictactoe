@@ -27,14 +27,6 @@ func CreatePlayer() *Player {
 	return this
 }
 
-func (this *Player) Play(state []byte, move []byte) ([]byte, Status) {
-	if !IsLegalMove(state, move) {
-		return []byte("         "), Illegal
-	}
-	next := this.Move(move)
-	return next, Condition(next)
-}
-
 // Given an array of nine bytes it will return an appropriate move.
 func (this *Player) Move(b []byte) []byte {
 
