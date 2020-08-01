@@ -78,15 +78,15 @@ func count(b []byte) (x int, o int, f int) {
 	return x, o, f
 }
 
-func IsLegalMove(state []byte, move []byte) bool {
-	if len(state) != 9 || len(move) != 9 {
+func IsLegalMove(last []byte, curr []byte) bool {
+	if len(last) != 9 || len(curr) != 9 {
 		return false
 	}
-	if bytes.Equal(state, move) {
+	if bytes.Equal(last, curr) {
 		return false
 	}
 	for i := 0; i < 9; i++ {
-		if state[i] != move[i] && state[i] != F {
+		if last[i] != curr[i] && last[i] != F {
 			return false
 		}
 	}
@@ -95,23 +95,23 @@ func IsLegalMove(state []byte, move []byte) bool {
 
 func IsLegalBoard(b []byte) bool {
 	if len(b) != 9 {
-		return true
+		return false
 	}
 	x, o, f := count(b)
 	if x+o+f != 9 {
-		return true
-	}
-	if f == 9 {
 		return false
 	}
-	if o > x || x > o+1 {
+	if f == 9 {
 		return true
 	}
-	return false
+	if o > x || x > o+1 {
+		return false
+	}
+	return true
 }
 
 func Condition(board []byte) Status {
-	if IsLegalBoard(board) {
+	if !IsLegalBoard(board) {
 		return Illegal
 	}
 	var (
