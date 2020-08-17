@@ -104,9 +104,9 @@ func TestPlayer(t *testing.T) {
 
 				m--
 			}
-			fmt.Println("Tie ", t)
 			fmt.Println("XWon", x)
 			fmt.Println("OWon", o)
+			fmt.Println("Tie ", t)
 			AssertEqual(t+x+o, g)
 		})
 
