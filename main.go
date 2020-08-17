@@ -28,11 +28,10 @@ func CreatePlayer() *Player {
 }
 
 // Given an array of nine bytes it will return an appropriate move.
-func (this *Player) Move(b []byte) []byte {
+func (this *Player) Move(b []byte) ([]byte, bool) {
 
-	// If the game has ended return an empty array.
-	if c := Condition(b); c == Illegal || c != NotEnded {
-		return []byte("         ")
+	if Condition(b) != NotEnded {
+		return b, false
 	}
 
 	// We don't want to change the source data so copy it.
@@ -61,7 +60,7 @@ func (this *Player) Move(b []byte) []byte {
 		cell = rand.Intn(9)
 	}
 	board[cell] = player
-	return board
+	return board, true
 }
 
 func count(b []byte) (x int, o int, f int) {
@@ -111,7 +110,7 @@ func IsLegalBoard(b []byte) bool {
 }
 
 func Condition(board []byte) Status {
-	if !IsLegalBoard(board) {
+	if len(board) != 9 {
 		return Illegal
 	}
 	var (
@@ -151,5 +150,20 @@ func Condition(board []byte) Status {
 		return Tie
 	default:
 		return NotEnded
+	}
+}
+
+func ConditionToString(c Status) string {
+	switch c {
+	case XWon:
+		return "XWon"
+	case OWon:
+		return "OWon"
+	case Tie:
+		return "Tie"
+	case Illegal:
+		return "Illegal"
+	default:
+		return "NotEnded"
 	}
 }
