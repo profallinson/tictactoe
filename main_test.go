@@ -75,24 +75,39 @@ func TestPlayer(t *testing.T) {
 
 	Describe("Playing oneself", func() {
 
-		It("should play its self and 'Tie' 10 times", func() {
+		It("should play its self for a 1000 moves", func() {
 			ttt := CreatePlayer()
-			m := []byte("         ")
-			x := 10000
-			t := 10
-			for x > 0 && t > 0 {
-				m, _ = ttt.Move(m)
-				if c := Condition(m); c != NotEnded {
-					fmt.Println(ConditionToString(c))
-					m = []byte("         ")
-					if c == Tie {
-						t--
-					}
+			b := []byte("         ")
+			m := 10000
+			g := 0
+			t := 0
+			x := 0
+			o := 0
+			for m > 0 {
+				b, _ = ttt.Move(b)
+				// fmt.Println(string(b))
+
+				switch Condition(b) {
+				case XWon:
+					b = []byte("         ")
+					x++
+					g++
+				case OWon:
+					b = []byte("         ")
+					o++
+					g++
+				case Tie:
+					b = []byte("         ")
+					t++
+					g++
 				}
-				fmt.Println(string(m))
-				x--
+
+				m--
 			}
-			AssertEqual(t, 0)
+			fmt.Println("Tie ", t)
+			fmt.Println("XWon", x)
+			fmt.Println("OWon", o)
+			AssertEqual(t+x+o, g)
 		})
 
 	})
