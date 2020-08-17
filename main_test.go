@@ -75,7 +75,7 @@ func TestPlayer(t *testing.T) {
 
 	Describe("Playing oneself", func() {
 
-		It("should play its self for a 1000 moves", func() {
+		It("should play itself for a 10000 moves", func() {
 			ttt := CreatePlayer()
 			b := []byte("         ")
 			m := 10000
