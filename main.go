@@ -19,16 +19,21 @@ const (
 	F byte = 32 // " "
 )
 
-type Player struct{}
+type Player interface {
+	Move(b []byte) ([]byte, bool)
+}
 
-func CreatePlayer() *Player {
-	this := &Player{}
+type player struct{}
+
+func CreatePlayer() Player {
+	this := &player{}
 	rand.Seed(42)
 	return this
 }
 
-// Given an array of nine bytes it will return an appropriate move.
-func (this *Player) Move(b []byte) ([]byte, bool) {
+// Given an array of nine bytes it will return an appropriate move as a new byte array.
+// The second return value is true if a move can still be played.
+func (this *player) Move(b []byte) ([]byte, bool) {
 
 	if Condition(b) != NotEnded {
 		return b, false

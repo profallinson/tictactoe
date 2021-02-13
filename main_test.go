@@ -19,9 +19,9 @@ func TestPlayer(t *testing.T) {
 
 	Describe("Player.Move()", func() {
 
-		It("should return *Player", func() {
+		It("should return *player", func() {
 			ttt := CreatePlayer()
-			AssertEqual(reflect.TypeOf(ttt).String(), "*tictactoe.Player")
+			AssertEqual(reflect.TypeOf(ttt).String(), "*tictactoe.player")
 		})
 
 		It("should play opening move", func() {
