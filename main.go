@@ -1,7 +1,6 @@
 package tictactoe
 
 import (
-	// "fmt"
 	"bytes"
 	"math/rand"
 )

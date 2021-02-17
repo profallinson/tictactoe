@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Rule Engine
+# TicTacToe Rule Engine
 
 ## Testing
 
