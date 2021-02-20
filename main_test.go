@@ -38,6 +38,55 @@ func TestPlayer(t *testing.T) {
 
 	})
 
+	Describe("IsLegalMove()", func() {
+
+		It("should return 'true' as a opening move", func() {
+			a := []byte("         ")
+			b := []byte("X        ")
+			AssertEqual(IsLegalMove(a, b), true)
+		})
+
+		It("should return 'true' as a second move", func() {
+			a := []byte("X        ")
+			b := []byte("XO       ")
+			AssertEqual(IsLegalMove(a, b), true)
+		})
+
+		It("should return 'false' the boards are different sizes", func() {
+			a := []byte("X       ")
+			b := []byte("O        ")
+			AssertEqual(IsLegalMove(a, b), false)
+			a = []byte("X        ")
+			b = []byte("O       ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+		It("should return 'false' as you can't play on a played space", func() {
+			a := []byte("X        ")
+			b := []byte("O        ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+		It("should return 'false' as there was no move", func() {
+			a := []byte("X        ")
+			b := []byte("X        ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+		It("should return 'false' as there was more than one move", func() {
+			a := []byte("X        ")
+			b := []byte("X  O   O ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+		It("should return 'false' as there was more than one move", func() {
+			a := []byte("X  O   X ")
+			b := []byte("X OOX  X ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+	})
+
 	Describe("IsLegalBoard()", func() {
 
 		It("should return 'Illegal' as there are too many Xs", func() {

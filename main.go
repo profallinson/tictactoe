@@ -82,17 +82,26 @@ func count(b []byte) (x int, o int, f int) {
 }
 
 func IsLegalMove(last []byte, curr []byte) bool {
-	if len(last) != 9 || len(curr) != 9 {
+	// Check if the boards by themselves are legal.
+	if !IsLegalBoard(last) || !IsLegalBoard(curr) {
 		return false
 	}
+	// If the bytes match then nothing changed so it's illegal.
 	if bytes.Equal(last, curr) {
 		return false
 	}
+	// If a play was not on a free space then it's illegal.
+	play := 0
 	for i := 0; i < 9; i++ {
-		if last[i] != curr[i] && last[i] != F {
+		// If a current play is not on a free space then it's illegal.
+		if last[i] != curr[i] && last[i] == F {
+			play++
+		}
+		if play > 1 {
 			return false
 		}
 	}
+	// Otherwise, it's all good.
 	return true
 }
 

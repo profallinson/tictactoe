@@ -10,4 +10,4 @@
 ## Coverage
 
 	cd $GOPATH/src/github.com/profallinson/tictactoe
-	go test -covermode=count -coverprofile=count.out; go tool cover -html=count.out
+	go test -covermode=count -coverprofile=count.out; go tool cover -html=count.out -o=coverage.html
