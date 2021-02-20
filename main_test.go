@@ -26,13 +26,13 @@ func TestPlayer(t *testing.T) {
 
 		It("should play opening move", func() {
 			ttt := CreatePlayer()
-			m, _ := ttt.Move([]byte("         "))
+			m := ttt.Move([]byte("         "))
 			AssertEqual(string(m), "        X")
 		})
 
 		It("should start a new game", func() {
 			ttt := CreatePlayer()
-			m, _ := ttt.Move([]byte("XOXXOO OX"))
+			m := ttt.Move([]byte("XOXXOO OX"))
 			AssertEqual(string(m), "XOXXOO OX")
 		})
 
@@ -133,7 +133,7 @@ func TestPlayer(t *testing.T) {
 			x := 0
 			o := 0
 			for m > 0 {
-				b, _ = ttt.Move(b)
+				b = ttt.Move(b)
 				// fmt.Println(string(b))
 
 				switch Condition(b) {

@@ -19,7 +19,7 @@ const (
 )
 
 type Player interface {
-	Move(b []byte) ([]byte, bool)
+	Move(b []byte) []byte
 }
 
 type player struct{}
@@ -32,10 +32,10 @@ func CreatePlayer() Player {
 
 // Given an array of nine bytes it will return an appropriate move as a new byte array.
 // The second return value is true if a move can still be played.
-func (this *player) Move(b []byte) ([]byte, bool) {
+func (this *player) Move(b []byte) []byte {
 
 	if Condition(b) != NotEnded {
-		return b, false
+		return b
 	}
 
 	// We don't want to change the source data so copy it.
@@ -64,7 +64,7 @@ func (this *player) Move(b []byte) ([]byte, bool) {
 		cell = rand.Intn(9)
 	}
 	board[cell] = player
-	return board, true
+	return board
 }
 
 func count(b []byte) (x int, o int, f int) {
