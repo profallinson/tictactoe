@@ -20,12 +20,20 @@ const (
 
 type Player interface {
 	Move(b []byte) []byte
+	Name() string
 }
 
-type player struct{}
+type player struct {
+	name string
+}
 
-func CreatePlayer() Player {
+func (this *player) Name() string {
+	return this.name
+}
+
+func CreatePlayer(name string) Player {
 	this := &player{}
+	this.name = name
 	rand.Seed(42)
 	return this
 }
@@ -123,7 +131,7 @@ func IsLegalBoard(b []byte) bool {
 }
 
 func Condition(board []byte) Status {
-	if len(board) != 9 {
+	if !IsLegalBoard(board) {
 		return Illegal
 	}
 	var (
