@@ -20,18 +20,18 @@ func TestPlayer(t *testing.T) {
 	Describe("Player.Move()", func() {
 
 		It("should return *player", func() {
-			ttt := CreatePlayer()
+			ttt := CreatePlayer("")
 			AssertEqual(reflect.TypeOf(ttt).String(), "*tictactoe.player")
 		})
 
 		It("should play opening move", func() {
-			ttt := CreatePlayer()
+			ttt := CreatePlayer("")
 			m := ttt.Move([]byte("         "))
 			AssertEqual(string(m), "        X")
 		})
 
 		It("should start a new game", func() {
-			ttt := CreatePlayer()
+			ttt := CreatePlayer("")
 			m := ttt.Move([]byte("XOXXOO OX"))
 			AssertEqual(string(m), "XOXXOO OX")
 		})
@@ -85,6 +85,12 @@ func TestPlayer(t *testing.T) {
 			AssertEqual(IsLegalMove(a, b), false)
 		})
 
+		It("should return 'false' as there was no move", func() {
+			a := []byte("   O OX X")
+			b := []byte("  O  XX  ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
 	})
 
 	Describe("IsLegalBoard()", func() {
@@ -125,7 +131,7 @@ func TestPlayer(t *testing.T) {
 	Describe("Playing with oneself", func() {
 
 		It("should play itself for a 10000 moves", func() {
-			ttt := CreatePlayer()
+			ttt := CreatePlayer("")
 			b := []byte("         ")
 			m := 10000
 			g := 0

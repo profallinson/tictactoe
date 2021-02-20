@@ -105,6 +105,9 @@ func IsLegalMove(last []byte, curr []byte) bool {
 		if last[i] != curr[i] && last[i] == F {
 			play++
 		}
+		if last[i] != curr[i] && last[i] != F {
+			return false
+		}
 		if play > 1 {
 			return false
 		}
