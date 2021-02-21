@@ -85,9 +85,15 @@ func TestPlayer(t *testing.T) {
 			AssertEqual(IsLegalMove(a, b), false)
 		})
 
-		It("should return 'false' as there was no move", func() {
+		It("should return 'false' as the board changed", func() {
 			a := []byte("   O OX X")
 			b := []byte("  O  XX  ")
+			AssertEqual(IsLegalMove(a, b), false)
+		})
+
+		It("should return 'false' as the game reset", func() {
+			a := []byte("     O  X")
+			b := []byte("         ")
 			AssertEqual(IsLegalMove(a, b), false)
 		})
 
